@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import plotly
 import plotly.express as px
 import pandas as pd
-import plotly.graph_objs as go 
+import plotly.graph_objs as go
 import json5
 from sqlalchemy import create_engine
 import joblib
@@ -10,7 +10,7 @@ import json
 
 app = Flask(__name__)
 
-pd.read_csv(r'C:\Users\Admin\Desktop\Final-Project-Hotel-Cancellation-Prediction-main\hotel_final.csv')
+pd.read_csv(r'hotel_final.csv')
 
 def category_plot(
     cat_plot = 'histplot',
@@ -18,7 +18,7 @@ def category_plot(
     estimator = 'count', hue = 'market_segment'):
 
 #generate data frame from csv
-    hotel = pd.read_csv(r'C:\Users\Admin\Desktop\Final-Project-Hotel-Cancellation-Prediction-main\hotel_final.csv')
+    hotel = pd.read_csv(r'hotel_final.csv')
 
     if cat_plot == 'histplot':
         data = []
@@ -32,7 +32,7 @@ def category_plot(
             )
             data.append(hist)
         title = 'Histogram'
-    
+
     elif cat_plot == 'boxplot':
         data = []
 
@@ -44,7 +44,7 @@ def category_plot(
             )
             data.append(box)
         title = 'Box'
-    
+
     if cat_plot == 'histplot':
         layout = go.Layout(
             title = title,
@@ -52,7 +52,7 @@ def category_plot(
             yaxis = dict(title = 'tes'),
             boxmode = 'group'
         )
-    
+
     else:
         layout = go.Layout(
             title=title,
@@ -99,5 +99,5 @@ def index():
 
 if __name__ == '__main__':
 
-    model = joblib.load(r'C:\Users\Admin\Desktop\Final-Project-Hotel-Cancellation-Prediction-main\Flask\model_hotel_base')
+    model = joblib.load(r'model_hotel_base')
     app.run(debug = True)

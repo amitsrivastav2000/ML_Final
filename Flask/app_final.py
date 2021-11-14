@@ -5,11 +5,11 @@ import pandas as pd
 import numpy as np
 # import plotly.express as px
 import joblib
-import plotly 
+import plotly
 import plotly.graph_objs as go
 
 
-hotel2 = pd.read_csv(r'C:\Users\Admin\Desktop\Final-Project-Hotel-Cancellation-Prediction-main\Flask\data\hotel_final.csv')
+hotel2 = pd.read_csv(r'data\hotel_final.csv')
 
 
 app = Flask(__name__)
@@ -82,13 +82,13 @@ def index():
 
 @app.route('/preview')
 def preview():
-    df = pd.read_csv(r'C:\Users\Admin\Desktop\Final-Project-Hotel-Cancellation-Prediction-main\Flask\data\hotel_final.csv')
+    df = pd.read_csv(r'data\hotel_final.csv')
     return render_template('preview.html', df_view = df.head(100))
 
 @app.route('/analyze', methods = ['POST'])
 def analyze ():
     if request.method == 'POST':
-        hotel = request.form['Hotel Choice'] 
+        hotel = request.form['Hotel Choice']
         location = request.form['location']
         lead_time = request.form['lead_time']
         market_segment = request.form['market_segment']
@@ -101,7 +101,7 @@ def analyze ():
         customer_type = request.form['customer_type']
         total_stays = request.form['total_stays']
         total_guest = request.form['guests']
-    
+
         hotel = int(hotel)
         location = int(location)
         lead_time = int(lead_time)
@@ -130,7 +130,7 @@ def analyze ():
 
     df_predict = pd.DataFrame(data = data, index = [1])
 
-    model = joblib.load(r'C:\Users\Admin\Desktop\Final-Project-Hotel-Cancellation-Prediction-main\Flask\model_hotel_base')
+    model = joblib.load(r'model_hotel_base')
     prediction = model.predict_proba(df_predict)
     prediction_fix = model.predict(df_predict)
     round_prediction = round(100 * prediction[0][1],2)
@@ -142,7 +142,7 @@ def analyze ():
 
     if prediction_fix[0] == 0:
         final_prediction = "Confirmed"
-    
+
     else :
         final_prediction = "Cancelled"
 
@@ -175,8 +175,8 @@ def category():
     return render_template('category.html')
 
 
-    
-    
+
+
 
 
 
